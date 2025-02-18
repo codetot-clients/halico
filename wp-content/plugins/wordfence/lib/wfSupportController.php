@@ -159,10 +159,13 @@ class wfSupportController {
 	const ITEM_SCAN_RESULT_MODIFIED_PLUGIN = 'scan-result-modified-plugin';
 	const ITEM_SCAN_RESULT_MODIFIED_THEME = 'scan-result-modified-theme';
 	const ITEM_SCAN_RESULT_PLUGIN_VULNERABLE = 'scan-result-plugin-vulnerable';
+	const ITEM_SCAN_RESULT_CORE_UPGRADE = 'scan-result-core-upgrade';
 
 	const ITEM_TOOLS_TWO_FACTOR = 'tools-two-factor';
 	const ITEM_TOOLS_LIVE_TRAFFIC = 'tools-live-traffic';
 	const ITEM_TOOLS_LIVE_TRAFFIC_OPTION_ENABLE = 'tools-live-traffic-option-enable';
+	const ITEM_TOOLS_AUDIT_LOG = 'tools-audit-log';
+	const ITEM_TOOLS_AUDIT_LOG_OPTION_MODE = 'tools-audit-log-option-mode';
 	const ITEM_TOOLS_WHOIS_LOOKUP = 'tools-whois-lookup';
 	const ITEM_TOOLS_IMPORT_EXPORT = 'tools-import-export';
 	
@@ -353,10 +356,13 @@ class wfSupportController {
 			case self::ITEM_SCAN_RESULT_MODIFIED_PLUGIN:
 			case self::ITEM_SCAN_RESULT_MODIFIED_THEME:
 			case self::ITEM_SCAN_RESULT_PLUGIN_VULNERABLE:
+			case self::ITEM_SCAN_RESULT_CORE_UPGRADE:
 
 			case self::ITEM_TOOLS_TWO_FACTOR:
 			case self::ITEM_TOOLS_LIVE_TRAFFIC:
 			case self::ITEM_TOOLS_LIVE_TRAFFIC_OPTION_ENABLE:
+			case self::ITEM_TOOLS_AUDIT_LOG:
+			case self::ITEM_TOOLS_AUDIT_LOG_OPTION_MODE:
 			case self::ITEM_TOOLS_WHOIS_LOOKUP:
 			case self::ITEM_TOOLS_IMPORT_EXPORT:
 				

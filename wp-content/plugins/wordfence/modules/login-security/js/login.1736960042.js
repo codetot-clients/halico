@@ -380,11 +380,6 @@
 						$('#wfls-captcha-jwt').val(json.captcha);
 					}
 					
-					if (parseInt(WFLSVars.useCAPTCHA)) {
-						wfls_init_captcha();
-						wfls_init_captcha_contact();
-					}
-
 					blocker.release();
 					if (json.hasOwnProperty('two_factor_required') && json.two_factor_required) {
 						if ($('#wfls-prompt-overlay').length === 0) {
