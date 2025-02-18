@@ -1,0 +1,98 @@
+.widget {
+    margin-bottom: 15px;
+
+    &-title {
+        background: $color-main;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 10px 15px;
+        margin: 0;
+        @include fontSize(18px);
+    }
+    &-content {
+        border: 1px solid $color-graylight;
+        padding: 15px;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li {
+                border-bottom: 1px solid $color-gray;
+
+                &:last-child {
+                    border: none;
+
+                    a {
+                        padding-bottom: 0;
+                    }
+                }
+            }
+
+            a {
+                color: $color-text;
+                display: block;
+                padding: 10px 10px 10px 20px;
+                background: url(../images/play-arrow.svg) -999px 0 no-repeat;
+                background-size: 10px 15px;
+
+            }
+
+            li.current-cat a, li a:hover {
+                color: $color-main;
+                background-position: 5px 12px;
+            }
+        }
+    }
+}
+
+.widget_search {
+    .widget-content {
+        padding: 5px 10px 10px;
+    }
+}
+.searchform {
+    input[type="text"] {
+        display: inline-block;
+        width: 78%;
+        border: none;
+        font-size: 85%;
+        &:focus {
+            outline-width: 0;
+        }
+    }
+    input[type="submit"] {
+        display: inline-block;
+        width: 18%;
+        background: #fff url(../images/icon-search.svg) 50% 100% no-repeat;
+        background-size: 18px 18px;
+        border: none;
+    }
+}
+
+.widget.recent-posts-widget-with-thumbnails {
+    .widget-content {
+        border: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    li {
+        border: none;
+        margin-bottom: 10px;
+    }
+    a {
+        padding: 0;
+    }
+    img {
+        height: auto !important;
+        width: 100% !important;
+        margin: .3em .75em .75em 0;
+    }
+    .rpwwt-post-title {
+        display: block;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+}

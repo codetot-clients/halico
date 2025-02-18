@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'LeagueSpartan-Regular';
+  src: url("../fonts/LeagueSpartan-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'futura_heavy';
+  font-weight: 600;
+  src: url("../fonts/LeagueSpartan-SemiBold.ttf") format("truetype"); 
+}
+
+@font-face {
+  font-family: 'lobster';
+  src: url("../fonts/SVN-LOBSTER.woff") format("woff"), url("../fonts/SVN-LOBSTER.TTF") format("truetype"); }

@@ -1,0 +1,54 @@
+.codong {
+    &__list {
+        margin-bottom: 30px;
+    }
+    &__item {
+        padding: 10px 0;
+        border-bottom: 1px solid $color-gray;
+
+        @include tablet2 {
+            border: 1px solid $color-gray;
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+    }
+    &__thumb {
+        max-width: 20%;
+    }
+    &__title {
+        color: $color-main;
+        font-size: 120%;
+
+        @include tablet2 {
+            margin-top: 10px;
+        }
+    }
+    &__btn {
+        display: inline-block;
+        background: $color-main url(../images/download-button.svg) 10px 9px no-repeat;
+        background-size: 10px 10px;
+        color: #fff;
+        font-size: 90%;
+        border-radius: 5px;
+        padding: 5px 15px 5px 25px;
+
+        &:hover {
+            color: $color-second;
+        }
+
+    }
+
+    .media-body {
+        padding-left: 15px;
+    }
+}
+
+.codong_layout2 {
+
+    .codong__item {
+
+        // @include tablet {
+        //     width: 50%;
+        // }
+    }
+}

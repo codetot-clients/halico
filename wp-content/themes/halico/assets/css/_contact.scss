@@ -1,0 +1,69 @@
+.contact {
+    h3 {
+        color: $color-main;
+        text-transform: uppercase;
+        @include fontSize(16px);
+    }
+
+    &__list {
+        margin-top: 20px;
+
+        @include pc {
+            margin-top: 50px;
+        }
+    }
+
+    &__item {
+        line-height: 30px;
+        margin-bottom: 15px;
+    }
+
+   &__input, &__area {
+       display: block;
+       border: 1px solid $color-gray;
+       border-radius: 5px;
+       color: $color-text;
+       width: 100%;
+       margin-bottom: 15px;
+       padding: 10px;
+   }
+   &__btn {
+       background: $color-main;
+       color: #fff;
+       border: none;
+       border-radius: 5px;
+       padding: 5px 20px;
+   }
+
+}
+
+.icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: $color-main;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 5px;
+
+    @include pc {
+        margin-right: 30px;
+    }
+
+    &-address {
+        background: $color-main url(../images/icon-address.svg) 5px 5px no-repeat;
+        background-size: 20px 20px;
+    }
+    &-phone {
+        background: $color-main url(../images/icon-telephone.svg) 5px 5px no-repeat;
+        background-size: 20px 20px;
+    }
+    &-mail {
+        background: $color-main url(../images/icon-envelope.svg) 5px 5px no-repeat;
+        background-size: 20px 20px;
+    }
+    &-facebook {
+        background: $color-main url(../images/facebook-logo.svg) 5px 5px no-repeat;
+        background-size: 20px 20px;
+    }
+}

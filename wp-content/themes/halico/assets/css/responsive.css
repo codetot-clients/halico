@@ -1,0 +1,50 @@
+
+    @media only screen and (max-width: 768.98px) {
+       
+}
+
+@media only screen and (max-width: 600px) {
+
+}
+@media only screen and (max-width: 576px) {
+.main-navigation .menu li ul a {
+    font-size: 20px !important;
+	}
+	.main-navigation .menu li ul {
+    margin: 5px 0 !important;
+	}
+	.main-navigation .menu > li.menu-item-has-children > a::after {
+    top: 10px !important;
+	}
+}
+
+
+@media only screen and (max-width: 500px) {
+
+}
+
+
+
+
+@media only screen and (max-width: 470px) {
+
+    }
+
+@media only screen and (max-width: 450px) {
+
+
+}
+ @media only screen and (max-width: 430px) {
+
+
+}
+    @media only screen and (max-width: 420px) {
+
+
+    }
+  @media only screen and (max-width: 410px) {
+
+ }
+    @media only screen and (max-width: 390px) {
+
+    }

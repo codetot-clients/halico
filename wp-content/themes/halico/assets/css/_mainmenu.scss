@@ -1,0 +1,217 @@
+.menu-open {
+    overflow: hidden;
+
+    .menu-close {
+        display: block;
+    }
+
+    .main-navigation {
+        display: block;
+        opacity: 1;
+
+        > div {
+            overflow-y: scroll;
+        }
+    }
+}
+
+.menu-close {
+    display: none;
+    position: fixed;
+    z-index: 11;
+    top: 15px;
+    right: 15px;
+}
+.main-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(#000000, 0.5);
+    z-index: 10;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    @include pc {
+        position: static;
+        display: inline-block;
+        opacity: 1;
+        background-color: transparent;
+    }
+
+    > div {
+        margin-left: 30%;
+        background-color: #fff;
+        height: 100vh;
+
+        @include pc {
+            height: auto;
+            margin: 0;
+            background-color: transparent;
+        }
+    }
+
+    .menu {
+        margin: 0;
+        padding: 60px 15px 0 60px;
+        text-align: left;
+
+        @include pc {
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            margin: 10px 0;
+
+            @include pc {
+                display: inline-block;
+                margin: 0 30px;
+                position: relative;
+            }
+
+            &:hover {
+                ul {
+                    display: block;
+                }
+            }
+
+            ul {
+                margin: 15px 0;
+                padding: 0;
+                display: none;
+
+                @include pc {
+                    display: none;
+                    position: absolute;
+                    top: 79px;
+                    left: -22px;
+                    background: #fff;
+                    border: 1px solid #efefef;
+                    margin: 0;
+                    padding: 10px 0;
+                    min-width: 175px;
+                    z-index: 10;
+                }
+
+                li {
+                    margin: 0;
+                }
+
+                a {
+                    color: #999;
+                    font-weight: normal;
+                    text-transform: none;
+                    padding: 5px 0 5px 20px;
+
+                    @include pc {
+                        color: $color-text;
+                        padding: 5px 20px;
+						    font-size: 17px;
+                    }
+                }
+                .current-menu-item a, a:hover {
+                    color: $color-main;
+                    @include pc {
+                        &::before {
+                            content: "";
+                            display: block;
+                            height: 1px;
+                            width: 80%;
+                            background-color: $color-main;
+                            position: absolute;
+                            bottom: 2px;
+                            left: 20px;
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+        a {
+            color: $color-text;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            @include fontTitle();
+            @include fontSize(20px);
+
+            @include pc {
+                color: #fff;
+                padding: 30px 0;
+                @include fontSize(14px);
+            }
+        }
+
+        > li.menu-item-has-children > a {
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                top: 10px;
+                right: -17px;
+                width: 12px;
+                height: 10px;
+                background: url(../images/arrow-down.svg) 0 0 no-repeat;
+                background-size: 12px 20px;
+                overflow: hidden;
+
+                @include pc {
+                    background: none;
+                }
+            }
+        }
+
+        > li.current-menu-parent {
+            &:hover {
+                ul {
+                    display: block;
+                }
+            }
+            ul {
+                display: block;
+
+                @include pc {
+                    display: none;
+                }
+            }
+        }
+
+        > li.current-menu-parent.menu-item-has-children > a {
+            &::after { 
+                background-position: 0 -10px;
+            }
+        }
+
+        > li.current-menu-item > a, 
+        > li.current-menu-parent > a,
+        a:hover {
+            color: $color-main;
+
+            &::before {
+                content: "";
+                display: block;
+                height: 3px;
+                width: 100%;
+                background-color: $color-main;
+                position: absolute;
+                bottom: -3px;
+                left: 0;
+            }
+
+            @include pc {
+                color: #fff;
+                &::before {
+                    background-color: #BC2126;
+                    height: 2px;
+                    bottom: 28px;
+                }
+            }
+        }
+    }
+}
+
+

@@ -1,0 +1,47 @@
+@mixin fontTitle() {
+    font-family: $font, sans-serif;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+@function calculateRem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+
+@mixin fontSize($size) {
+    font-size: $size; //Fallback in px
+    font-size: calculateRem($size);
+}
+
+@mixin vAlign() {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+}
+
+@mixin smallphone {
+    @media screen and (min-device-width: 374px) { @content; }
+}
+@mixin tablet {
+    @media screen and (min-device-width: 768px) { @content; }
+}
+@mixin tablet2 {
+    @media screen and (min-device-width: 992px) { @content; }
+}
+@mixin pc {
+    @media screen and (min-device-width: 1200px) { @content; }
+}
+@mixin pc1440 {
+    @media screen and (min-device-width: 1440px) { @content; }
+}
+@mixin pc2 {
+    @media screen and (min-device-width: 1900px) { @content; }
+}

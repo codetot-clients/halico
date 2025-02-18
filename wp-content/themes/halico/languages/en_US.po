@@ -1,0 +1,295 @@
+# Copyright (C) 2017 Automattic
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: _s 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
+"POT-Creation-Date: 2019-10-03 09:13+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2019-10-24 08:53+0000\n"
+"Last-Translator: Halico Quan tri <admin@halico.com.vn>\n"
+"Language-Team: English (United States)\n"
+"X-Generator: Loco https://localise.biz/\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Loco-Version: 2.3.0; wp-5.2.4"
+
+#. Name of the template
+msgid "POPUP - 18 Age"
+msgstr ""
+
+#. translators: 1: title.
+#: comments.php:35
+#, php-format
+msgid "One thought on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#. translators: 1: comment count number, 2: title.
+#: comments.php:41
+#, php-format
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:66
+msgid "Comments are closed."
+msgstr ""
+
+#. Name of the template
+msgid "Distribution"
+msgstr ""
+
+#: archive-cong_bo_chat_luong.php:30
+msgid "Công bố chất lượng"
+msgstr "Quantity Press"
+
+#: archive-cong_bo_chat_luong.php:33 taxonomy-thong_tin_co_dong.php:32
+msgid "Lọc theo năm"
+msgstr "Filter by year"
+
+#: archive-cong_bo_chat_luong.php:55 taxonomy-thong_tin_co_dong.php:54
+msgid "Tải về"
+msgstr "Download"
+
+#: header.php:51
+msgid "Vào trang"
+msgstr "Access"
+
+#: header.php:55
+msgid "Nhớ thông tin của tôi"
+msgstr "Remember"
+
+#: footer.php:41
+msgid "Địa chỉ liên hệ"
+msgstr "Address"
+
+#: footer.php:43 inc/customizer.php:59
+msgid "Điện thoại"
+msgstr "Phone"
+
+#. Name of the template
+msgid "Intro"
+msgstr ""
+
+#: page-intro.php:39
+msgid "Lịch sử"
+msgstr "History"
+
+#: page-intro.php:83 page-intro.php:121 single-san_pham.php:105
+#: archive-san_pham.php:55
+msgid "Xem chi tiết"
+msgstr "View detail"
+
+#: page-intro.php:98 page-home.php:183
+msgid "Hệ thống chứng nhận ISO"
+msgstr "ISO Certification System"
+
+#. Name of the template
+msgid "Awards"
+msgstr ""
+
+#: page-awards.php:36
+msgid "Năm"
+msgstr "Year"
+
+#. translators: %s: search query.
+#: search.php:22
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: functions.php:47
+msgid "Primary"
+msgstr ""
+
+#: functions.php:48
+msgid "Language"
+msgstr ""
+
+#: functions.php:49
+msgid "Footer 01"
+msgstr ""
+
+#: functions.php:50
+msgid "Footer 02"
+msgstr ""
+
+#: functions.php:111
+msgid "Sidebar"
+msgstr ""
+
+#: functions.php:113 functions.php:122 functions.php:131 functions.php:140
+msgid "Add widgets here."
+msgstr ""
+
+#: functions.php:120
+msgid "CoDong_Sidebar"
+msgstr ""
+
+#: functions.php:129
+msgid "CongBoChatLuong_Sidebar"
+msgstr ""
+
+#: functions.php:138
+msgid "Tintuc_Sidebar"
+msgstr ""
+
+#: 404.php:18
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#: 404.php:22
+msgid ""
+"It looks like nothing was found at this location. Maybe try one of the links "
+"below or a search?"
+msgstr ""
+
+#: 404.php:31
+msgid "Most Used Categories"
+msgstr ""
+
+#. translators: %1$s: smiley
+#: 404.php:47
+#, php-format
+msgid "Try looking in the monthly archives. %1$s"
+msgstr ""
+
+#: single-san_pham.php:41
+msgid "Trạng thái"
+msgstr "Status"
+
+#: single-san_pham.php:45
+msgid "Màu sắc"
+msgstr "Color"
+
+#: single-san_pham.php:57
+msgid "Mùi vị"
+msgstr "Taste"
+
+#: single-san_pham.php:61 single-san_pham.php:64
+msgid "Chia sẻ"
+msgstr "Share"
+
+#: single-san_pham.php:70
+msgid "Mô tả sản phẩm"
+msgstr "Description"
+
+#: single-san_pham.php:83
+msgid "Các sản phẩm khác của Halico"
+msgstr "Other products from Halico"
+
+#. Name of the template
+msgid "Homepage"
+msgstr ""
+
+#: page-home.php:40
+msgid "Mạng lưới phân phối"
+msgstr "Distribution network"
+
+#: page-home.php:57
+msgid "Hương vị Việt trong từng sản phẩm"
+msgstr "Vietnamese taste in each product"
+
+#: page-home.php:94
+msgid "Xem toàn bộ sản phẩm"
+msgstr "View all products"
+
+#: page-home.php:102
+msgid "Bước tiếp trăm năm"
+msgstr "Continuing hundred year tradition"
+
+#: page-home.php:113
+msgid "Tin tức"
+msgstr "News"
+
+#: page-home.php:143 archive.php:39
+msgid "Đọc thêm"
+msgstr "Read more"
+
+#. Name of the template
+msgid "Contact"
+msgstr ""
+
+#: page-contact.php:23
+msgid "Liên hệ với Halico"
+msgstr "Contact with Halico"
+
+#: archive-san_pham.php:31
+msgid "Sản phẩm"
+msgstr "Products"
+
+#. Name of the template
+msgid "Vision & Mission"
+msgstr ""
+
+#: page-vision.php:57
+msgid "Giá trị cốt lõi"
+msgstr "Core values"
+
+#: template-parts/content-page.php:24 template-parts/content.php:50
+msgid "Pages:"
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers
+#: template-parts/content-page.php:37
+#, php-format
+msgid "Edit <span class=\"screen-reader-text\">%s</span>"
+msgstr ""
+
+#: template-parts/content-none.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#. translators: 1: link to WP admin new post page.
+#: template-parts/content-none.php:24
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: template-parts/content-none.php:37
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: template-parts/content-none.php:44
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers
+#: template-parts/content.php:39
+#, php-format
+msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr ""
+
+#: inc/template-functions.php:148
+msgid "Nội dung tìm kiếm ..."
+msgstr "Search ..."
+
+#: inc/customizer.php:45
+msgid "Địa chỉ"
+msgstr "Address"
+
+#. Name of the theme
+msgid "halico"
+msgstr ""
+
+#. Description of the theme
+msgid "Description"
+msgstr ""
+
+#. URI of the theme
+#. Author URI of the theme
+msgid "http://underscores.me/"
+msgstr ""
+
+#. Author of the theme
+msgid "Underscores.me"
+msgstr ""
