@@ -1,9 +1,4 @@
 <?php
-/**
- * Yoast SEO Plugin File.
- *
- * @package WPSEO\Migrations
- */
 
 namespace Yoast\WP\SEO\Config\Migrations;
 
@@ -11,7 +6,7 @@ use Yoast\WP\Lib\Migrations\Migration;
 use Yoast\WP\Lib\Model;
 
 /**
- * TruncateIndexableTables
+ * Class ResetIndexableHierarchyTable.
  */
 class ResetIndexableHierarchyTable extends Migration {
 
@@ -24,6 +19,8 @@ class ResetIndexableHierarchyTable extends Migration {
 
 	/**
 	 * Migration up.
+	 *
+	 * @return void
 	 */
 	public function up() {
 		$this->query( 'TRUNCATE TABLE ' . $this->get_table_name() );
@@ -31,6 +28,8 @@ class ResetIndexableHierarchyTable extends Migration {
 
 	/**
 	 * Migration down.
+	 *
+	 * @return void
 	 */
 	public function down() {
 		// Nothing to do.

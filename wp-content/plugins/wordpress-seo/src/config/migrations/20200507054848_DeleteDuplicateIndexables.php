@@ -1,9 +1,4 @@
 <?php
-/**
- * Yoast SEO Plugin File.
- *
- * @package WPSEO\Migrations
- */
 
 namespace Yoast\WP\SEO\Config\Migrations;
 
@@ -11,7 +6,7 @@ use Yoast\WP\Lib\Migrations\Migration;
 use Yoast\WP\Lib\Model;
 
 /**
- * DeleteDuplicateIndexables.
+ * Class DeleteDuplicateIndexables.
  */
 class DeleteDuplicateIndexables extends Migration {
 
@@ -24,6 +19,8 @@ class DeleteDuplicateIndexables extends Migration {
 
 	/**
 	 * Migration up.
+	 *
+	 * @return void
 	 */
 	public function up() {
 		$table_name = $this->get_table_name();
@@ -37,6 +34,8 @@ class DeleteDuplicateIndexables extends Migration {
 
 	/**
 	 * Migration down.
+	 *
+	 * @return void
 	 */
 	public function down() {
 		// Nothing to do.

@@ -1,16 +1,9 @@
 <?php
-/**
- * WPSEO plugin file.
- *
- * @package Yoast\WP\SEO\Helpers\Schema
- */
 
 namespace Yoast\WP\SEO\Helpers\Schema;
 
 /**
- * Class Language_Helper
- *
- * @package Yoast\WP\SEO\Helpers\Schema
+ * Class Language_Helper.
  */
 class Language_Helper {
 
@@ -29,7 +22,8 @@ class Language_Helper {
 		/**
 		 * Filter: 'wpseo_schema_piece_language' - Allow changing the Schema piece language.
 		 *
-		 * @api string $type The Schema piece language.
+		 * @param string $type The Schema piece language.
+		 * @param array  $data The Schema piece data.
 		 */
 		$data['inLanguage'] = \apply_filters( 'wpseo_schema_piece_language', \get_bloginfo( 'language' ), $data );
 

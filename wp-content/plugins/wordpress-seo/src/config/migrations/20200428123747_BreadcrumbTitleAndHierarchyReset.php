@@ -1,9 +1,4 @@
 <?php
-/**
- * Yoast SEO Plugin File.
- *
- * @package WPSEO\Migrations
- */
 
 namespace Yoast\WP\SEO\Config\Migrations;
 
@@ -11,7 +6,7 @@ use Yoast\WP\Lib\Migrations\Migration;
 use Yoast\WP\Lib\Model;
 
 /**
- * BreadcrumbTitleAndHierarchyReset
+ * Class BreadcrumbTitleAndHierarchyReset.
  */
 class BreadcrumbTitleAndHierarchyReset extends Migration {
 
@@ -24,6 +19,8 @@ class BreadcrumbTitleAndHierarchyReset extends Migration {
 
 	/**
 	 * Migration up.
+	 *
+	 * @return void
 	 */
 	public function up() {
 		$this->change_column( $this->get_indexable_table_name(), 'breadcrumb_title', 'text', [ 'null' => true ] );
@@ -32,6 +29,8 @@ class BreadcrumbTitleAndHierarchyReset extends Migration {
 
 	/**
 	 * Migration down.
+	 *
+	 * @return void
 	 */
 	public function down() {
 		$this->change_column(

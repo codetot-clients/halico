@@ -1,9 +1,4 @@
 <?php
-/**
- * Yoast SEO Plugin File.
- *
- * @package WPSEO\Migrations
- */
 
 namespace Yoast\WP\SEO\Config\Migrations;
 
@@ -11,7 +6,7 @@ use Yoast\WP\Lib\Migrations\Migration;
 use Yoast\WP\Lib\Model;
 
 /**
- * Class WpYoastIndexableHierarchy
+ * Class WpYoastIndexableHierarchy.
  */
 class WpYoastIndexableHierarchy extends Migration {
 
@@ -24,6 +19,8 @@ class WpYoastIndexableHierarchy extends Migration {
 
 	/**
 	 * Migration up.
+	 *
+	 * @return void
 	 */
 	public function up() {
 		$table_name = $this->get_table_name();
@@ -50,7 +47,15 @@ class WpYoastIndexableHierarchy extends Migration {
 				'limit'       => 11,
 			]
 		);
-		$indexable_table->column( 'depth', 'integer', [ 'unsigned' => true, 'null' => true, 'limit' => 11 ] );
+		$indexable_table->column(
+			'depth',
+			'integer',
+			[
+				'unsigned' => true,
+				'null'     => true,
+				'limit'    => 11,
+			]
+		);
 		$indexable_table->finish();
 
 		$this->add_index( $table_name, 'indexable_id', [ 'name' => 'indexable_id' ] );
@@ -60,6 +65,8 @@ class WpYoastIndexableHierarchy extends Migration {
 
 	/**
 	 * Migration up.
+	 *
+	 * @return void
 	 */
 	public function down() {
 		$this->drop_table( $this->get_table_name() );

@@ -47,6 +47,12 @@ function cptui_settings() {
 	?>
 	<div class="wrap about-wrap">
 		<?php
+		/**
+		 * Fires immediately after wrap div started on all of the cptui admin pages.
+		 *
+		 * @since 1.14.0
+		 */
+		do_action( 'cptui_inside_wrap' );
 
 		/**
 		 * Fires inside and at the top of the wrapper for the main plugin landing page.
@@ -81,20 +87,22 @@ function cptui_settings() {
 		do_action( 'cptui_main_page_before_changelog' );
 		?>
 
-		<h2><?php printf( esc_html__( "What's new in version %s", 'custom-post-type-ui' ), CPTUI_VERSION ); ?></h2>
+		<h2>
+			<?php
+			printf(
+			// translators: Placeholder will hold the plugin version.
+				esc_html__( "What's new in version %s", 'custom-post-type-ui' ),
+				esc_html( CPTUI_VERSION )
+			);
+			?>
+		</h2>
 		<div class="changelog about-integrations">
 			<div class="cptui-feature feature-section col three-col">
 				<div class="col">
-					<h2><?php esc_html_e( 'Ability to temporarily disable content types without deleting them.', 'custom-post-type-ui' ); ?></h2>
-					<p><?php esc_html_e( 'Have you ever wanted to temporarily disable things without removing their settings, as you continue developing the site? Custom Post Type UI now has the ability to skip content types with a WordPress filter. UI options to toggle will be in a later version.', 'custom-post-type-ui' ); ?></p>
-				</div>
-				<div class="col">
-					<h2><?php esc_html_e( 'New post type labels introduced in WordPress 5.0', 'custom-post-type-ui' ); ?></h2>
-					<p><?php esc_html_e( 'We have increased our minimum supported WordPress version and with that, we now support the newest available label options. You now have even finer control over your admin UI wording.', 'custom-post-type-ui' ); ?></p>
-				</div>
-				<div class="col last-feature">
-					<h2></h2>
-					<p></p>
+					<h2><?php esc_html_e( 'Post type migration support', 'custom-post-type-ui' ); ?></h2>
+					<p><?php esc_html_e( 'If you are trying to move post types into CPTUI, you can now mark as such to prevent slug conflicts notices.', 'custom-post-type-ui' ); ?></p>
+					<h2><?php esc_html_e( 'Moved to minimum of WordPress 6.3.', 'custom-post-type-ui' ); ?></h2>
+					<p><?php esc_html_e( 'The move to require WordPress 6.3 allowed for adding "item_trashed" label support.', 'custom-post-type-ui' ); ?></p>
 				</div>
 			</div>
 		</div>
@@ -120,6 +128,7 @@ function cptui_settings() {
  * @since 1.4.0
  */
 function cptui_pluginize_content() {
+	// translators: Placeholder will hold the name of the author of the plugin.
 	echo '<h1>' . sprintf( esc_html__( 'More from %s', 'custom-post-type-ui' ), 'WebDevStudios' ) . '</h1>';
 	echo '<div class="wdspromos-about">';
 	$ads = cptui_get_ads();
@@ -137,7 +146,7 @@ function cptui_pluginize_content() {
 			printf(
 				'<p><a href="%s">%s</a></p>',
 				esc_url( $ad['url'] ),
-				$the_ad
+				$the_ad // phpcs:ignore
 			);
 		}
 	}

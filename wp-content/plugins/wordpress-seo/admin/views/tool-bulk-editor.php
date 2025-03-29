@@ -81,6 +81,8 @@ if ( ! empty( $_REQUEST['_wp_http_referer'] ) && isset( $_SERVER['REQUEST_URI'] 
  *
  * @param WPSEO_Bulk_List_Table $table The table to render.
  * @param string                $id    The id for the tab.
+ *
+ * @return void
  */
 function wpseo_get_rendered_tab( $table, $id ) {
 	?>
@@ -94,7 +96,7 @@ function wpseo_get_rendered_tab( $table, $id ) {
 
 ?>
 <script>
-	// phpcs:ignore WordPress.Security.OutputEscaping -- WPSEO_Utils::format_json_encode is safe.
+	<?php /* phpcs:ignore WordPress.Security.EscapeOutput -- WPSEO_Utils::format_json_encode is safe. */ ?>
 	var wpseoBulkEditorNonce = <?php echo WPSEO_Utils::format_json_encode( wp_create_nonce( 'wpseo-bulk-editor' ) ); ?>;
 
 	// eslint-disable-next-line

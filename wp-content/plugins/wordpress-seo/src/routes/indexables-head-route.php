@@ -1,20 +1,16 @@
 <?php
-/**
- * Head route for indexables.
- *
- * @package Yoast\WP\SEO\Routes\Routes
- */
 
 namespace Yoast\WP\SEO\Routes;
 
 use WP_REST_Request;
 use WP_REST_Response;
+use WPSEO_Utils;
 use Yoast\WP\SEO\Actions\Indexables\Indexable_Head_Action;
 use Yoast\WP\SEO\Conditionals\Headless_Rest_Endpoints_Enabled_Conditional;
 use Yoast\WP\SEO\Main;
 
 /**
- * Indexable_Reindexing_Route class.
+ * Head route for indexables.
  */
 class Indexables_Head_Route implements Route_Interface {
 
@@ -23,14 +19,14 @@ class Indexables_Head_Route implements Route_Interface {
 	 *
 	 * @var string
 	 */
-	const HEAD_FOR_URL_ROUTE = 'get_head';
+	public const HEAD_FOR_URL_ROUTE = 'get_head';
 
 	/**
 	 * The full posts route constant.
 	 *
 	 * @var string
 	 */
-	const FULL_HEAD_FOR_URL_ROUTE = Main::API_V1_NAMESPACE . '/' . self::HEAD_FOR_URL_ROUTE;
+	public const FULL_HEAD_FOR_URL_ROUTE = Main::API_V1_NAMESPACE . '/' . self::HEAD_FOR_URL_ROUTE;
 
 	/**
 	 * The head action.
@@ -49,14 +45,18 @@ class Indexables_Head_Route implements Route_Interface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Returns the conditionals based in which this loadable should be active.
+	 *
+	 * @return array<string>
 	 */
 	public static function get_conditionals() {
 		return [ Headless_Rest_Endpoints_Enabled_Conditional::class ];
 	}
 
 	/**
-	 * @inheritDoc
+	 * Registers routes with WordPress.
+	 *
+	 * @return void
 	 */
 	public function register_routes() {
 		$route_args = [
@@ -81,7 +81,7 @@ class Indexables_Head_Route implements Route_Interface {
 	 * @return WP_REST_Response The response.
 	 */
 	public function get_head( WP_REST_Request $request ) {
-		$url  = \esc_url_raw( $request['url'] );
+		$url  = \esc_url_raw( \utf8_uri_encode( $request['url'] ) );
 		$data = $this->head_action->for_url( $url );
 
 		return new WP_REST_Response( $data, $data->status );
@@ -92,9 +92,10 @@ class Indexables_Head_Route implements Route_Interface {
 	 *
 	 * @param string $url The url to check.
 	 *
-	 * @return boolean Whether or not the url is valid.
+	 * @return bool Whether or not the url is valid.
 	 */
 	public function is_valid_url( $url ) {
+		$url = WPSEO_Utils::sanitize_url( \utf8_uri_encode( $url ) );
 		if ( \filter_var( $url, \FILTER_VALIDATE_URL ) === false ) {
 			return false;
 		}

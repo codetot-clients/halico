@@ -1,9 +1,4 @@
 <?php
-/**
- * Yoast SEO Plugin File.
- *
- * @package WPSEO\Migrations
- */
 
 namespace Yoast\WP\SEO\Config\Migrations;
 
@@ -11,7 +6,7 @@ use Yoast\WP\Lib\Migrations\Migration;
 use Yoast\WP\Lib\Model;
 
 /**
- * ClearIndexableTables
+ * Class ClearIndexableTables.
  */
 class ClearIndexableTables extends Migration {
 
@@ -24,6 +19,8 @@ class ClearIndexableTables extends Migration {
 
 	/**
 	 * Migration up.
+	 *
+	 * @return void
 	 */
 	public function up() {
 		$this->query( 'TRUNCATE TABLE ' . $this->get_indexable_table_name() );
@@ -32,6 +29,8 @@ class ClearIndexableTables extends Migration {
 
 	/**
 	 * Migration down.
+	 *
+	 * @return void
 	 */
 	public function down() {
 		// Nothing to do.

@@ -1,9 +1,4 @@
 <?php
-/**
- * Yoast SEO Plugin File.
- *
- * @package WPSEO\Migrations
- */
 
 namespace Yoast\WP\SEO\Config\Migrations;
 
@@ -11,7 +6,7 @@ use Yoast\WP\Lib\Migrations\Migration;
 use Yoast\WP\Lib\Model;
 
 /**
- * ExpandIndexableColumnLengths
+ * Class ExpandIndexableColumnLengths.
  */
 class ExpandIndexableColumnLengths extends Migration {
 
@@ -24,6 +19,8 @@ class ExpandIndexableColumnLengths extends Migration {
 
 	/**
 	 * Migration up.
+	 *
+	 * @return void
 	 */
 	public function up() {
 		$this->change_column( $this->get_table_name(), 'title', 'text', [ 'null' => true ] );
@@ -35,6 +32,8 @@ class ExpandIndexableColumnLengths extends Migration {
 
 	/**
 	 * Migration down.
+	 *
+	 * @return void
 	 */
 	public function down() {
 		$attr_limit_191 = [

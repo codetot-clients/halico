@@ -2,8 +2,8 @@
 Contributors: celloexpressions
 Tags: custom taxonomy, custom tax, widget, sidebar, category, categories, taxonomy, custom category, custom categories, post types, custom post types, custom post type categories
 Requires at least: 3.3
-Tested up to: 5.1
-Stable tag: 4.1
+Tested up to: 6.6
+Stable tag: 4.2
 Description: Widget that list terms in a custom taxonomy (often used as categories or category types for a custom post type).
 License: GPLv2
 
@@ -28,6 +28,10 @@ If you'd like to do something outside of the configuration options of this plugi
 
 
 == Changelog ==
+= 4.2 =
+* Fix default extended options display.
+* Add additional escaping and sanitization.
+
 = 4.1 =
 * Add support for selective refresh in the customizer, available in WordPress 4.5.
 

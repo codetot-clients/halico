@@ -1,13 +1,9 @@
 <?php
-/**
- * Watcher for the stripcategorybase key in wpseo_titles, in order to clear the permalink of the category indexables.
- *
- * @package Yoast\YoastSEO\Watchers
- */
 
 namespace Yoast\WP\SEO\Integrations\Watchers;
 
-use Yoast\WP\SEO\Presenters\Admin\Indexation_Permalink_Warning_Presenter;
+use WPSEO_Utils;
+use Yoast\WP\SEO\Config\Indexing_Reasons;
 
 /**
  * Watches the stripcategorybase key in wpseo_titles, in order to clear the permalink of the category indexables.
@@ -52,7 +48,9 @@ class Indexable_Category_Permalink_Watcher extends Indexable_Permalink_Watcher {
 
 		// If a new value has been set for 'stripcategorybase', clear the category permalinks.
 		if ( $old_value['stripcategorybase'] !== $new_value['stripcategorybase'] ) {
-			$this->reset_permalink_indexables( 'term', 'category', Indexation_Permalink_Warning_Presenter::REASON_CATEGORY_BASE_PREFIX );
+			$this->indexable_helper->reset_permalink_indexables( 'term', 'category', Indexing_Reasons::REASON_CATEGORY_BASE_PREFIX );
+			// Clear the rewrites, so the new permalink structure is used.
+			WPSEO_Utils::clear_rewrites();
 		}
 	}
 }

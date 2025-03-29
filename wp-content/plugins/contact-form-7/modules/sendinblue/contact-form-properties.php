@@ -38,9 +38,7 @@ function wpcf7_sendinblue_save_contact_form( $contact_form, $args, $context ) {
 		return;
 	}
 
-	$prop = isset( $_POST['wpcf7-sendinblue'] )
-		? (array) $_POST['wpcf7-sendinblue']
-		: array();
+	$prop = (array) ( $_POST['wpcf7-sendinblue'] ?? array() );
 
 	$prop = wp_parse_args(
 		$prop,
@@ -94,6 +92,7 @@ function wpcf7_sendinblue_editor_panels( $panels ) {
 
 		$description = sprintf(
 			esc_html(
+				/* translators: %s: link labeled 'Brevo integration' */
 				__( "You can set up the Brevo integration here. For details, see %s.", 'contact-form-7' )
 			),
 			wpcf7_link(

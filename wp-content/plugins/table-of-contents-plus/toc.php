@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Table of Contents Plus
- * Plugin URI : http://dublue.com/plugins/toc/
+ * Plugin URI : https://aioseo.com
  * Description: A powerful yet user friendly plugin that automatically creates a table of contents. Can also output a sitemap listing all pages and categories.
- * Author:      Michael Tran
- * Author URI:  http://dublue.com/
+ * Author:      All in One SEO Team
+ * Author URI:  https://aioseo.com
  * Text Domain: table-of-contents-plus
  * Domain Path: /languages
- * Version:     2311
+ * Version:     2411.1
  * License:     GPL2
  */
 
@@ -23,8 +23,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Table of Contents Plus. If not, see
-https://github.com/zedzedzed/table-of-contents-plus/blob/main/LICENSE.md
+along with Table of Contents Plus.
 */
 
 /**

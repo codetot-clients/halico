@@ -1,9 +1,4 @@
 <?php
-/**
- * WPSEO plugin file.
- *
- * @package Yoast\WP\SEO\Integrations\Front_End
- */
 
 namespace Yoast\WP\SEO\Integrations\Front_End;
 
@@ -24,14 +19,20 @@ class Handle_404 implements Integration_Interface {
 	private $query_wrapper;
 
 	/**
-	 * @inheritDoc
+	 * Returns the conditionals based in which this loadable should be active.
+	 *
+	 * @return array
 	 */
 	public static function get_conditionals() {
 		return [ Front_End_Conditional::class ];
 	}
 
 	/**
-	 * @inheritDoc
+	 * Initializes the integration.
+	 *
+	 * This is the place to register hooks and filters.
+	 *
+	 * @return void
 	 */
 	public function register_hooks() {
 		\add_filter( 'pre_handle_404', [ $this, 'handle_404' ] );
@@ -96,6 +97,8 @@ class Handle_404 implements Integration_Interface {
 
 	/**
 	 * Sets the 404 status code.
+	 *
+	 * @return void
 	 */
 	protected function set_404() {
 		$wp_query          = $this->query_wrapper->get_query();
@@ -108,6 +111,8 @@ class Handle_404 implements Integration_Interface {
 	 * Sets the headers for http.
 	 *
 	 * @codeCoverageIgnore
+	 *
+	 * @return void
 	 */
 	protected function set_headers() {
 		// Overwrite Content-Type header.

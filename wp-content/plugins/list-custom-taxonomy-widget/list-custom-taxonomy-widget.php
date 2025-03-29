@@ -3,14 +3,15 @@
  * Plugin Name: List Custom Taxonomy Widget
  * Plugin URI: http://celloexpressions.com/plugins/list-custom-taxonomy-widget
  * Description: Widget that displays category listings for custom post types (custom taxonomies).
- * Version: 4.1
+ * Version: 4.2
  * Author: Nick Halsey
  * Author URI: http://celloexpressions.com/
  * Tags: custom taxonomy, custom tax, widget, sidebar, category, categories, taxonomy, custom category, custom categories, post types, custom post types, custom post type categories
  * License: GPL
+ * Text Domain: list-custom-taxonomy-widget
  
 =====================================================================================
-Copyright (C) 2016 Nick Halsey
+Copyright (C) 2024 Nick Halsey
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -35,7 +36,7 @@ function init_lc_taxonomy() { return register_widget('lc_taxonomy'); }
 class lc_taxonomy extends WP_Widget {
 	/** constructor */
 	function __construct() {
-		parent::__construct( 'lc_taxonomy', $name = 'List Custom Taxonomy', array(
+		parent::__construct( 'lc_taxonomy', $name = __( 'List Custom Taxonomy', 'list-custom-taxonomy-widget' ), array(
 			'customize_selective_refresh' => true,
 		) );
 	}
@@ -58,7 +59,7 @@ class lc_taxonomy extends WP_Widget {
 		} else {
 			$this_taxonomy = '';
 		}
-		$hierarchical = !empty( $instance['hierarchical'] ) ? '1' : '0';
+		$hierarchical = !empty( $instance['hierarchical'] ) ? 1 : 0;
 		$inv_empty = !empty( $instance['empty'] ) ? '0' : '1'; // invert to go from UI's "show empty" to WP's "hide empty"
 		$showcount = !empty( $instance['count'] ) ? '1' : '0';
 		if( array_key_exists('orderby',$instance) ){
@@ -97,10 +98,10 @@ class lc_taxonomy extends WP_Widget {
 			$dropdown = false;
 		}
         // Output
-		$tax = $this_taxonomy;
+		$tax = esc_html( $this_taxonomy );
 		echo $before_widget;
 		echo '<div id="lct-widget-'.$tax.'-container" class="list-custom-taxonomy-widget">';
-		if ( $title ) echo $before_title . $title . $after_title;
+		if ( $title ) echo $before_title . esc_html( $title ) . $after_title;
 		if($dropdown){
 			$taxonomy_object = get_taxonomy( $tax );
 			if( in_array( $tax, array( 'category', 'post_tag', 'post_format' ) ) )
@@ -128,9 +129,10 @@ class lc_taxonomy extends WP_Widget {
 				'hide_if_empty'      => true,
 				'walker'			=> $walker,
 			);
-			echo '<form action="'. get_bloginfo('url'). '" method="get">';
-			wp_dropdown_categories($args);
-			echo '<input type="submit" value="go &raquo;" /></form>';
+			echo '<form action="'. esc_attr( get_bloginfo('url') ) . '" method="get">';
+			wp_dropdown_categories( $args );
+			$dropdown_submit_text = apply_filters( 'list_custom_taxonomy_widget_dropdown_submit_text', __( 'go &raquo;', 'list-custom-taxonomy-widget' ) );
+			echo '<input type="submit" value"' . esc_attr( $dropdown_submit_text ) . '" /></form>';
 		}
 		else {
 			$args = array(
@@ -150,7 +152,7 @@ class lc_taxonomy extends WP_Widget {
 					//'include'            => '',
 					'hierarchical'       => $hierarchical,
 					'title_li'           => '',
-					'show_option_none'   => 'No Categories',
+					'show_option_none'   => __( 'No Categories', 'list-custom-taxonomy-widget' ),
 					'number'             => null,
 					'echo'               => 1,
 					'depth'              => 0,
@@ -160,7 +162,7 @@ class lc_taxonomy extends WP_Widget {
 					'walker'             => null
 				);
 			echo '<ul id="lct-widget-'.$tax.'">';
-			wp_list_categories($args);
+			wp_list_categories( $args );
 			echo '</ul>';
 		}
 		echo '</div>';
@@ -170,13 +172,13 @@ class lc_taxonomy extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		
-		$instance['title']  = strip_tags( $new_instance['title'] );
-		$instance['taxonomy'] = strip_tags( $new_instance['taxonomy'] );
-		$instance['orderby'] = $new_instance['orderby'];
-		$instance['ascdsc'] = $new_instance['ascdsc'];
-		$instance['exclude'] = $new_instance['exclude'];
-		$instance['expandoptions'] = $new_instance['expandoptions'];
-		$instance['childof'] = $new_instance['childof'];
+		$instance['title']  = sanitize_text_field( $new_instance['title'] );
+		$instance['taxonomy'] = sanitize_text_field( $new_instance['taxonomy'] );
+		$instance['orderby'] = sanitize_text_field( $new_instance['orderby'] );
+		$instance['ascdsc'] = sanitize_text_field( $new_instance['ascdsc'] );
+		$instance['exclude'] = sanitize_text_field( $new_instance['exclude'] );
+		$instance['expandoptions'] = sanitize_text_field( $new_instance['expandoptions'] );
+		$instance['childof'] = sanitize_text_field( $new_instance['childof'] );
 		$instance['hierarchical'] = !empty($new_instance['hierarchical']) ? 1 : 0;
 		$instance['empty'] = !empty($new_instance['empty']) ? 1 : 0;
         $instance['count'] = !empty($new_instance['count']) ? 1 : 0;
@@ -189,29 +191,6 @@ class lc_taxonomy extends WP_Widget {
 	* Widget settings
 	**/
 	function form( $instance ) {
-		//for showing/hiding advanced options; wordpress moves this script to where it needs to go
-			wp_enqueue_script('jquery');
-			?><script>
-			jQuery(document).ready(function(){
-				var status = jQuery('#<?php echo $this->get_field_id('expandoptions'); ?>').val();
-				if ( status === 'expand' ) {
-					jQuery('.lctw-expand-options').hide();
-					jQuery('.lctw-all-options').show();
-				} else {
-					jQuery('.lctw-all-options').hide();
-				}
-			});
-			function lctwExpand(id){
-				jQuery('#' + id).val('expand');
-				jQuery('.lctw-all-options').show(500); 
-				jQuery('.lctw-expand-options').hide(500);
-			}
-			function lctwContract(id){
-				jQuery('#' + id).val('contract');
-				jQuery('.lctw-all-options').hide(500); 
-				jQuery('.lctw-expand-options').show(500);
-			}
-			</script><?php
 		  // instance exist? if not set defaults
 		    if ( $instance ) {
 				$title  = $instance['title'];
@@ -239,14 +218,37 @@ class lc_taxonomy extends WP_Widget {
 				$empty = false;
 				$dropdown = false;
 		    }
+		//for showing/hiding advanced options; wordpress moves this script to where it needs to go
+			wp_enqueue_script('jquery');
+			?><script>
+			jQuery(document).ready(function(){
+				var status = jQuery('#<?php echo esc_js( $expandoptions ); ?>').val();
+				if ( status === 'expand' ) {
+					jQuery('.lctw-expand-options').hide();
+					jQuery('.lctw-all-options').show();
+				} else {
+					jQuery('.lctw-all-options').hide();
+				}
+			});
+			function lctwExpand(id){
+				jQuery('#' + id).val('expand');
+				jQuery('.lctw-all-options').show(500); 
+				jQuery('.lctw-expand-options').hide(500);
+			}
+			function lctwContract(id){
+				jQuery('#' + id).val('contract');
+				jQuery('.lctw-all-options').hide(500); 
+				jQuery('.lctw-expand-options').show(500);
+			}
+			</script><?php
 			
 		// The widget form ?>
 			<p>
-				<label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __( 'Title:' ); ?></label>
-				<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" class="widefat" />
+				<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:', 'list-custom-taxonomy-widget' ); ?></label>
+				<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" class="widefat" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id('taxonomy'); ?>"><?php echo __( 'Select Taxonomy:' ); ?></label>
+				<label for="<?php echo $this->get_field_id('taxonomy'); ?>"><?php _e( 'Select Taxonomy:', 'list-custom-taxonomy-widget' ); ?></label>
 				<select name="<?php echo $this->get_field_name('taxonomy'); ?>" id="<?php echo $this->get_field_id('taxonomy'); ?>" class="widefat" style="height: auto;" size="4">
 			<?php 
 			$args=array(
@@ -264,20 +266,20 @@ class lc_taxonomy extends WP_Widget {
 			<?php }	?>
 			</select>
 			</p>
-			<h4 class="lctw-expand-options"><a href="javascript:void(0)" onclick="lctwExpand('<?php echo $this->get_field_id('expandoptions'); ?>')" >More Options...</a></h4>
-			<div class="lctw-all-options">
-				<h4 class="lctw-contract-options"><a href="javascript:void(0)" onclick="lctwContract('<?php echo $this->get_field_id('expandoptions'); ?>')" >Hide Extended Options</a></h4>
+			<h4 class="lctw-expand-options" <?php if ( 'contract' !== $expandoptions ) { echo 'style="display:none"'; } ?>><a href="javascript:void(0)" onclick="lctwExpand('<?php echo $this->get_field_id('expandoptions'); ?>')" ><?php _e( 'More Options&hellip;', 'list-custom-taxonomy-widget' ); ?></a></h4>
+			<div class="lctw-all-options" <?php if ( 'contract' === $expandoptions ) { echo 'style="display:none"'; } ?>>
+				<h4 class="lctw-contract-options"><a href="javascript:void(0)" onclick="lctwContract('<?php echo $this->get_field_id('expandoptions'); ?>')" ><?php _e( 'Hide Extended Options', 'list-custom-taxonomy-widget' ); ?></a></h4>
 				<input type="hidden" value="<?php echo $expandoptions; ?>" id="<?php echo $this->get_field_id('expandoptions'); ?>" name="<?php echo $this->get_field_name('expandoptions'); ?>" />
 				
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>"<?php checked( $showcount ); ?> />
-				<label for="<?php echo $this->get_field_id('count'); ?>"><?php _e( 'Show Post Counts' ); ?></label><br />
+				<label for="<?php echo $this->get_field_id('count'); ?>"><?php _e( 'Show Post Counts', 'list-custom-taxonomy-widget' ); ?></label><br />
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('hierarchical'); ?>" name="<?php echo $this->get_field_name('hierarchical'); ?>"<?php checked( $hierarchical ); ?> />
-				<label for="<?php echo $this->get_field_id('hierarchical'); ?>"><?php _e( 'Show Hierarchy' ); ?></label><br/>
+				<label for="<?php echo $this->get_field_id('hierarchical'); ?>"><?php _e( 'Show Hierarchy', 'list-custom-taxonomy-widget' ); ?></label><br/>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('empty'); ?>" name="<?php echo $this->get_field_name('empty'); ?>"<?php checked( $empty ); ?> />
-				<label for="<?php echo $this->get_field_id('empty'); ?>"><?php _e( 'Show Empty Terms' ); ?></label></p>
+				<label for="<?php echo $this->get_field_id('empty'); ?>"><?php _e( 'Show Empty Terms', 'list-custom-taxonomy-widget' ); ?></label></p>
 				
 				<p>
-					<label for="<?php echo $this->get_field_id('orderby'); ?>"><?php echo __( 'Order By:' ); ?></label>
+					<label for="<?php echo $this->get_field_id('orderby'); ?>"><?php _e( 'Order By:', 'list-custom-taxonomy-widget' ); ?></label>
 					<select name="<?php echo $this->get_field_name('orderby'); ?>" id="<?php echo $this->get_field_id('orderby'); ?>" class="widefat" >
 						<option value="ID" <?php if( $orderby == 'ID' ) { echo 'selected="selected"'; } ?>>ID</option>
 						<option value="name" <?php if( $orderby == 'name' ) { echo 'selected="selected"'; } ?>>Name</option>
@@ -292,14 +294,14 @@ class lc_taxonomy extends WP_Widget {
 				</p>
 				<p>
 					<label for="<?php echo $this->get_field_id('exclude'); ?>">Exclude (comma-separated list of ids to exclude)</label><br/>
-					<input type="text" class="widefat" name="<?php echo $this->get_field_name('exclude'); ?>" value="<?php echo $exclude; ?>" />
+					<input type="text" class="widefat" name="<?php echo $this->get_field_name('exclude'); ?>" value="<?php echo esc_attr( $exclude ); ?>" />
 				</p>
 				<p>
 					<label for="<?php echo $this->get_field_id('exclude'); ?>">Only Show Children of (category id)</label><br/>
-					<input type="text" class="widefat" name="<?php echo $this->get_field_name('childof'); ?>" value="<?php echo $childof; ?>" />
+					<input type="text" class="widefat" name="<?php echo $this->get_field_name('childof'); ?>" value="<?php echo esc_attr( $childof ); ?>" />
 				</p>
 				<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('dropdown'); ?>" name="<?php echo $this->get_field_name('dropdown'); ?>"<?php checked( $dropdown ); ?> />
-				<label for="<?php echo $this->get_field_id('dropdown'); ?>"><?php _e( 'Display as Dropdown' ); ?></label></p>
+				<label for="<?php echo $this->get_field_id('dropdown'); ?>"><?php _e( 'Display as Dropdown', 'list-custom-taxonomy-widget' ); ?></label></p>
 			</div>
 <?php 
 	}

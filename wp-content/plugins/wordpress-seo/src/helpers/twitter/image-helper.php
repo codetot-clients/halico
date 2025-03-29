@@ -1,16 +1,11 @@
 <?php
-/**
- * A helper object for Twitter images.
- *
- * @package \Yoast\WP\SEO\Helpers\Twitter
- */
 
 namespace Yoast\WP\SEO\Helpers\Twitter;
 
 use Yoast\WP\SEO\Helpers\Image_Helper as Base_Image_Helper;
 
 /**
- * Class Image_Helper
+ * A helper object for Twitter images.
  */
 class Image_Helper {
 
@@ -41,7 +36,7 @@ class Image_Helper {
 		/**
 		 * Filter: 'wpseo_twitter_image_size' - Allow changing the Twitter Card image size.
 		 *
-		 * @api string $featured_img Image size string.
+		 * @param string $featured_img Image size string.
 		 */
 		return (string) \apply_filters( 'wpseo_twitter_image_size', 'full' );
 	}
@@ -49,13 +44,15 @@ class Image_Helper {
 	/**
 	 * Retrieves an image url by its id.
 	 *
-	 * @codeCoverageIgnore It is a wrapper method.
-	 *
 	 * @param int $image_id The image id.
 	 *
-	 * @return string The image url.
+	 * @return string The image url. Empty string if the attachment is not valid.
 	 */
 	public function get_by_id( $image_id ) {
+		if ( ! $this->image->is_valid_attachment( $image_id ) ) {
+			return '';
+		}
+
 		return $this->image->get_attachment_image_source( $image_id, $this->get_image_size() );
 	}
 }

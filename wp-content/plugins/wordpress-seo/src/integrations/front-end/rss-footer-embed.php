@@ -1,9 +1,4 @@
 <?php
-/**
- * WPSEO plugin file.
- *
- * @package WPSEO\Frontend
- */
 
 namespace Yoast\WP\SEO\Integrations\Front_End;
 
@@ -12,7 +7,7 @@ use Yoast\WP\SEO\Helpers\Options_Helper;
 use Yoast\WP\SEO\Integrations\Integration_Interface;
 
 /**
- * Class RSS_Footer_Embed
+ * Class RSS_Footer_Embed.
  */
 class RSS_Footer_Embed implements Integration_Interface {
 
@@ -24,7 +19,9 @@ class RSS_Footer_Embed implements Integration_Interface {
 	protected $options;
 
 	/**
-	 * @inheritDoc
+	 * Returns the conditionals based in which this loadable should be active.
+	 *
+	 * @return array
 	 */
 	public static function get_conditionals() {
 		return [ Front_End_Conditional::class ];
@@ -42,7 +39,11 @@ class RSS_Footer_Embed implements Integration_Interface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Initializes the integration.
+	 *
+	 * This is the place to register hooks and filters.
+	 *
+	 * @return void
 	 */
 	public function register_hooks() {
 		\add_filter( 'the_content_feed', [ $this, 'embed_rssfooter' ] );
@@ -94,9 +95,8 @@ class RSS_Footer_Embed implements Integration_Interface {
 		/**
 		 * Filter: 'wpseo_include_rss_footer' - Allow the RSS footer to be dynamically shown/hidden.
 		 *
-		 * @api boolean $show_embed Indicates if the RSS footer should be shown or not.
-		 *
-		 * @param string $context The context of the RSS content - 'full' or 'excerpt'.
+		 * @param bool   $show_embed Indicates if the RSS footer should be shown or not.
+		 * @param string $context    The context of the RSS content - 'full' or 'excerpt'.
 		 */
 		if ( ! \apply_filters( 'wpseo_include_rss_footer', true, $context ) ) {
 			return false;
@@ -181,13 +181,13 @@ class RSS_Footer_Embed implements Integration_Interface {
 	protected function get_link_template() {
 		/**
 		 * Filter: 'nofollow_rss_links' - Allow the developer to determine whether or not to follow the links in
-		 * the bits Yoast SEO adds to the RSS feed, defaults to true.
-		 *
-		 * @api bool $unsigned Whether or not to follow the links in RSS feed, defaults to true.
+		 * the bits Yoast SEO adds to the RSS feed, defaults to false.
 		 *
 		 * @since 1.4.20
+		 *
+		 * @param bool $unsigned Whether or not to follow the links in RSS feed, defaults to true.
 		 */
-		if ( \apply_filters( 'nofollow_rss_links', true ) ) {
+		if ( \apply_filters( 'nofollow_rss_links', false ) ) {
 			return '<a rel="nofollow" href="%1$s">%2$s</a>';
 		}
 

@@ -1,15 +1,11 @@
 <?php
-/**
- * Builder for the indexables hierarchy.
- *
- * @package Yoast\YoastSEO\Builders
- */
 
 namespace Yoast\WP\SEO\Builders;
 
 use WP_Post;
 use WP_Term;
 use WPSEO_Meta;
+use Yoast\WP\SEO\Helpers\Indexable_Helper;
 use Yoast\WP\SEO\Helpers\Options_Helper;
 use Yoast\WP\SEO\Helpers\Post_Helper;
 use Yoast\WP\SEO\Models\Indexable;
@@ -18,9 +14,18 @@ use Yoast\WP\SEO\Repositories\Indexable_Repository;
 use Yoast\WP\SEO\Repositories\Primary_Term_Repository;
 
 /**
+ * Builder for the indexables hierarchy.
+ *
  * Builds the indexable hierarchy for indexables.
  */
 class Indexable_Hierarchy_Builder {
+
+	/**
+	 * Holds a list of indexable ids where the ancestors are saved for.
+	 *
+	 * @var array<int>
+	 */
+	protected $saved_ancestors = [];
 
 	/**
 	 * The indexable repository.
@@ -58,31 +63,43 @@ class Indexable_Hierarchy_Builder {
 	private $post;
 
 	/**
+	 * Holds the Indexable_Helper instance.
+	 *
+	 * @var Indexable_Helper
+	 */
+	private $indexable_helper;
+
+	/**
 	 * Indexable_Author_Builder constructor.
 	 *
 	 * @param Indexable_Hierarchy_Repository $indexable_hierarchy_repository The indexable hierarchy repository.
 	 * @param Primary_Term_Repository        $primary_term_repository        The primary term repository.
 	 * @param Options_Helper                 $options                        The options helper.
 	 * @param Post_Helper                    $post                           The post helper.
+	 * @param Indexable_Helper               $indexable_helper               The indexable helper.
 	 */
 	public function __construct(
 		Indexable_Hierarchy_Repository $indexable_hierarchy_repository,
 		Primary_Term_Repository $primary_term_repository,
 		Options_Helper $options,
-		Post_Helper $post
+		Post_Helper $post,
+		Indexable_Helper $indexable_helper
 	) {
 		$this->indexable_hierarchy_repository = $indexable_hierarchy_repository;
 		$this->primary_term_repository        = $primary_term_repository;
 		$this->options                        = $options;
 		$this->post                           = $post;
+		$this->indexable_helper               = $indexable_helper;
 	}
 
 	/**
 	 * Sets the indexable repository. Done to avoid circular dependencies.
 	 *
+	 * @required
+	 *
 	 * @param Indexable_Repository $indexable_repository The indexable repository.
 	 *
-	 * @required
+	 * @return void
 	 */
 	public function set_indexable_repository( Indexable_Repository $indexable_repository ) {
 		$this->indexable_repository = $indexable_repository;
@@ -96,10 +113,15 @@ class Indexable_Hierarchy_Builder {
 	 * @return Indexable The indexable.
 	 */
 	public function build( Indexable $indexable ) {
-		if ( $indexable->has_ancestors ) {
-			$this->indexable_hierarchy_repository->clear_ancestors( $indexable->id );
+		if ( $this->hierarchy_is_built( $indexable ) ) {
+			return $indexable;
 		}
 
+		if ( ! $this->indexable_helper->should_index_indexable( $indexable ) ) {
+			return $indexable;
+		}
+
+		$this->indexable_hierarchy_repository->clear_ancestors( $indexable->id );
 		$indexable_id = $this->get_indexable_id( $indexable );
 		$ancestors    = [];
 		if ( $indexable->object_type === 'post' ) {
@@ -111,11 +133,28 @@ class Indexable_Hierarchy_Builder {
 		}
 		$indexable->ancestors     = \array_reverse( \array_values( $ancestors ) );
 		$indexable->has_ancestors = ! empty( $ancestors );
-		if ( ! \is_null( $indexable->id ) ) {
+		if ( $indexable->id ) {
 			$this->save_ancestors( $indexable );
 		}
 
 		return $indexable;
+	}
+
+	/**
+	 * Checks if a hierarchy is built already for the given indexable.
+	 *
+	 * @param Indexable $indexable The indexable to check.
+	 *
+	 * @return bool True when indexable has a built hierarchy.
+	 */
+	protected function hierarchy_is_built( Indexable $indexable ) {
+		if ( \in_array( $indexable->id, $this->saved_ancestors, true ) ) {
+			return true;
+		}
+
+		$this->saved_ancestors[] = $indexable->id;
+
+		return false;
 	}
 
 	/**
@@ -126,9 +165,14 @@ class Indexable_Hierarchy_Builder {
 	 * @return void
 	 */
 	private function save_ancestors( $indexable ) {
+		if ( empty( $indexable->ancestors ) ) {
+			$this->indexable_hierarchy_repository->add_ancestor( $indexable->id, 0, 0 );
+			return;
+		}
 		$depth = \count( $indexable->ancestors );
 		foreach ( $indexable->ancestors as $ancestor ) {
-			$this->indexable_hierarchy_repository->add_ancestor( $indexable->id, $ancestor->id, $depth-- );
+			$this->indexable_hierarchy_repository->add_ancestor( $indexable->id, $ancestor->id, $depth );
+			--$depth;
 		}
 	}
 
@@ -235,7 +279,7 @@ class Indexable_Hierarchy_Builder {
 	/**
 	 * Find the deepest term in an array of term objects.
 	 *
-	 * @param array $terms Terms set.
+	 * @param array<WP_Term> $terms Terms set.
 	 *
 	 * @return int The deepest term ID.
 	 */
@@ -308,13 +352,18 @@ class Indexable_Hierarchy_Builder {
 	/**
 	 * Checks if an ancestor is valid to add.
 	 *
-	 * @param Indexable $ancestor     The ancestor to check.
+	 * @param Indexable $ancestor     The ancestor (presumed indexable) to check.
 	 * @param int       $indexable_id The indexable id we're adding ancestors for.
 	 * @param int[]     $parents      The indexable ids of the parents already added.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	private function is_invalid_ancestor( Indexable $ancestor, $indexable_id, $parents ) {
+	private function is_invalid_ancestor( $ancestor, $indexable_id, $parents ) {
+		// If the ancestor is not an Indexable, it is invalid by default.
+		if ( ! \is_a( $ancestor, 'Yoast\WP\SEO\Models\Indexable' ) ) {
+			return true;
+		}
+
 		// Don't add ancestors if they're unindexed, already added or the same as the main object.
 		if ( $ancestor->post_status === 'unindexed' ) {
 			return true;
